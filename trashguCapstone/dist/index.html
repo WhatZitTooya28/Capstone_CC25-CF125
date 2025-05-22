@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrashGu - Beranda</title>
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+      /* Custom styles for scroll-to-top button visibility */
+      #scrollToTopBtn {
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+      }
+    </style>
+  </head>
+  <body class="font-sans bg-slate-50 text-gray-800">
+    <header class="bg-white shadow-md sticky top-0 z-50">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-2">
+          <img src="./images/logo.png" alt="TrashGu Logo" class="h-10" />
+        </div>
+        <nav
+          class="hidden md:flex gap-8 text-base font-medium justify-center flex-1"
+        >
+          <a href="#" class="text-green-700 font-semibold">Beranda</a>
+          <a href="#tentang" class="text-gray-600 hover:text-green-700">Tentang</a>
+          <a href="#fitur" class="text-gray-600 hover:text-green-700">Fitur</a>
+          <a href="#artikel" class="text-gray-600 hover:text-green-700">Artikel</a>
+        </nav>
+        <div class="flex items-center gap-4 text-sm">
+          <a href="#" class="text-gray-600 hover:text-green-700 font-medium">Daftar</a>
+          <a
+            href="#"
+            class="bg-green-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-green-700 transition-colors"
+            >Masuk</a
+          >
+        </div>
+        <div class="md:hidden">
+            <button id="mobile-menu-button" class="text-gray-700 hover:text-green-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+      </div>
+      <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg">
+        <a href="#" class="block px-4 py-2 text-sm text-green-700 font-semibold">Beranda</a>
+        <a href="#tentang" class="block px-4 py-2 text-sm text-gray-600 hover:text-green-700 hover:bg-gray-50">Tentang</a>
+        <a href="#fitur" class="block px-4 py-2 text-sm text-gray-600 hover:text-green-700 hover:bg-gray-50">Fitur</a>
+        <a href="#artikel" class="block px-4 py-2 text-sm text-gray-600 hover:text-green-700 hover:bg-gray-50">Artikel</a>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:text-green-700 hover:bg-gray-50">Daftar</a>
+        <a href="#" class="block mx-2 my-2 bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 text-center">Masuk</a>
+      </div>
+    </header>
+
+    <section
+      class="py-16 sm:py-20 min-h-[calc(100vh-80px)] flex items-center"
+      style="background-image: url('./images/hero-bg-pattern.png'); background-repeat: repeat; background-size: auto;"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+        <div class="lg:w-1/2 text-center lg:text-left">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight text-gray-800">
+            Kenali Jenis Sampahmu<br class="hidden sm:block"> Seketika!
+          </h1>
+          <p class="text-gray-600 text-lg sm:text-xl mb-8 max-w-md mx-auto lg:mx-0">
+            <strong>TrashGu</strong> hadir untuk bantu kamu melakukan klasifikasi
+            sampah organik dan anorganik dengan cerdas dan mudah.
+          </p>
+          <a
+            href="#"
+            class="inline-block bg-green-600 text-white px-8 py-3.5 rounded-lg text-lg font-semibold hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl"
+            >Klasifikasi Sekarang</a
+          >
+        </div>
+        <div class="lg:w-1/2 mt-10 lg:mt-0 relative flex justify-center items-center">
+          <img
+            src="./images/hero-illustration.png"
+            alt="Ilustrasi Hero TrashGu"
+            class="max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl h-auto"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section id="tentang" class="bg-gray-100 py-16 sm:py-20 text-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <h2 class="text-3xl sm:text-4xl font-bold text-green-700 mb-3">Tentang TrashGu</h2>
+            <p class="text-base text-gray-500 mb-10"><strong>Kenali TrashGu lebih dekat</strong></p>
+            <p class="text-gray-700 max-w-3xl mx-auto leading-relaxed text-base sm:text-lg">
+                <strong>TrashGu</strong> merupakan sebuah platform digital yang
+                menyediakan solusi berbasis kecerdasan buatan untuk mendukung proses
+                pemilahan sampah organik dan anorganik secara otomatis. Dengan
+                mengimplementasikan teknologi Convolutional Neural Network (CNN),
+                TrashGu mampu melakukan klasifikasi jenis sampah secara efisien dan
+                akurat, sehingga dapat meningkatkan efektivitas pengelolaan limbah dan
+                mendorong penerapan praktik daur ulang yang berkelanjutan. Platform ini
+                tidak hanya berfungsi sebagai alat bantu teknis, tetapi juga memiliki
+                peran edukatif dalam menumbuhkan kesadaran serta membentuk perilaku
+                masyarakat yang lebih peduli terhadap pentingnya pemilahan sampah sejak
+                dari sumber. Berbasis pada kajian terhadap beberapa sistem pengelolaan
+                sampah pintar seperti CleanRobotics, Bin-e, dan Evreka, TrashGu
+                dikembangkan sebagai Minimum Viable Product (MVP) yang memiliki potensi
+                untuk terus disempurnakan dalam rangka mendukung upaya pelestarian
+                lingkungan secara digital dan sistematis.
+            </p>
+            <p class="italic text-gray-500 mt-8 text-lg"><strong>“Sort Better, Live Cleaner”</strong></p>
+        </div>
+    </section>
+
+    <section id="fitur" class="bg-white py-16 sm:py-20 text-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <h2 class="text-3xl sm:text-4xl font-bold text-green-700 mb-3">Fitur TrashGu</h2>
+            <p class="text-base text-gray-500 mb-12"><strong>Jelajahi fitur pintar TrashGu</strong></p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                <div class="bg-green-700 text-white p-8 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-start text-center">
+                <div class="w-20 h-20 mb-6 bg-white rounded-full flex items-center justify-center shadow-md">
+                    <img src="./images/ai.png" alt="Ikon Klasifikasi Otomatis" class="w-10 h-10">
+                </div>
+                <h3 class="font-semibold text-xl mb-2">Klasifikasi Otomatis</h3>
+                <p class="text-sm opacity-90">
+                    Unggah gambar dan sistem akan langsung mengidentifikasi jenis sampah.
+                </p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300 border border-gray-200 flex flex-col items-center justify-start text-center">
+                <div class="w-20 h-20 mb-6 bg-green-600 rounded-full flex items-center justify-center shadow-md">
+                    <img src="./images/responsive.png" alt="Ikon Responsif" class="w-10 h-10 filter brightness-0 invert">
+                </div>
+                <h3 class="font-semibold text-xl mb-2 text-gray-800">Responsif di Semua Perangkat</h3>
+                <p class="text-sm text-gray-600">
+                    Nikmati tampilan yang konsisten dan mudah digunakan di semua
+                    perangkat seperti ponsel, tablet, hingga laptop.
+                </p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300 border border-gray-200 flex flex-col items-center justify-start text-center">
+                <div class="w-20 h-20 mb-6 bg-green-600 rounded-full flex items-center justify-center shadow-md">
+                    <img src="./images/privasi.png" alt="Ikon Privasi Terjamin" class="w-10 h-10 filter brightness-0 invert">
+                </div>
+                <h3 class="font-semibold text-xl mb-2 text-gray-800">Privasi Terjamin</h3>
+                <p class="text-sm text-gray-600">
+                    Semua gambar diproses dengan aman, tidak disimpan tanpa izin, dan
+                    hanya untuk keperluan klasifikasi.
+                </p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300 border border-gray-200 flex flex-col items-center justify-start text-center">
+                <div class="w-20 h-20 mb-6 bg-green-600 rounded-full flex items-center justify-center shadow-md">
+                    <img src="./images/lingkungan.png" alt="Ikon Edukasi Lingkungan" class="w-10 h-10 filter brightness-0 invert">
+                </div>
+                <h3 class="font-semibold text-xl mb-2 text-gray-800">Edukasi Lingkungan</h3>
+                <p class="text-sm text-gray-600">
+                    Dapatkan informasi tentang cara memilah dan mengelola sampah secara
+                    bijak.
+                </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="artikel" class="bg-gray-100 py-16 sm:py-20 text-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <h2 class="text-3xl sm:text-4xl font-bold text-green-700 mb-3">
+                Berita & Tips Pengelolaan Sampah
+            </h2>
+            <p class="text-base text-gray-500 mb-12">
+                <strong>Dapatkan informasi terkini tentang cara mengelola sampah secara efektif</strong>
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+                <img src="./images/tempat-sampah.png" alt="Artikel 1: Mengelola Sampah Rumah Tangga" class="w-full h-48 object-cover" />
+                <div class="p-5 text-left">
+                    <h4 class="font-semibold text-lg mb-2 text-gray-800">
+                    5 Cara Mudah Mengelola Sampah Rumah Tangga
+                    </h4>
+                    <a href="https://www.detik.com/properti/tips-dan-panduan/d-7432145/5-cara-mengelola-sampah-rumah-tangga-yang-baik-biar-sehat" class="text-green-600 text-sm font-medium hover:underline"
+                    >Baca Selengkapnya &rarr;</a
+                    >
+                </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+                <img src="./images/kenali-jenis-sampah.png" alt="Artikel 2: Jenis Sampah" class="w-full h-48 object-cover" />
+                <div class="p-5 text-left">
+                    <h4 class="font-semibold text-lg mb-2 text-gray-800">
+                    Jenis Sampah yang Wajib Kamu Ketahui!
+                    </h4>
+                    <a href="https://www.dbs.com/spark/index/id_id/site/articles/livemorekind/2022-jenis-sampah-dan-tempat-membuangnya.html" class="text-green-600 text-sm font-medium hover:underline"
+                    >Baca Selengkapnya &rarr;</a
+                    >
+                </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+                <img src="./images/dampakbumi.png" alt="Artikel 3: Dampak untuk Bumi" class="w-full h-48 object-cover" />
+                <div class="p-5 text-left">
+                    <h4 class="font-semibold text-lg mb-2 text-gray-800">
+                    Kebiasaan Kecil yang Berdampak untuk Bumi
+                    </h4>
+                    <a href="https://indonesiabaik.id/artikel/ini-dia-kebiasaan-kecil-yang-bisa-menyelamatkan-bumi-sudahkah-kamu-coba" class="text-green-600 text-sm font-medium hover:underline"
+                    >Baca Selengkapnya &rarr;</a
+                    >
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-100 text-gray-700 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <img src="./images/logo.png" class="h-10" alt="TrashGu Logo Footer" />
+                </div>
+                <p class="text-sm leading-relaxed text-gray-600">
+                    TrashGu membantu Anda memilah sampah dengan mudah, cepat, dan ramah lingkungan. Sort Better, Live Cleaner.
+                </p>
+            </div>
+            <div>
+                <h5 class="font-semibold text-gray-800 mb-4">Tautan Cepat</h5>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#tentang" class="text-gray-600 hover:text-green-600 transition-colors">Tentang Kami</a></li>
+                    <li><a href="#fitur" class="text-gray-600 hover:text-green-600 transition-colors">Fitur</a></li>
+                    <li><a href="#artikel" class="text-gray-600 hover:text-green-600 transition-colors">Artikel</a></li>
+                    <li><a href="#" class="text-gray-600 hover:text-green-600 transition-colors">Kebijakan Privasi</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="font-semibold text-gray-800 mb-4">Hubungi Kami</h5>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="mailto:info@trashgu.id" class="text-gray-600 hover:text-green-600 transition-colors">info@trashgu.id</a></li>
+                    <li class="flex items-center gap-3 mt-3">
+                        <a href="#" aria-label="Instagram TrashGu" class="text-gray-500 hover:text-green-600 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.905.24 2.49.446.58.205.975.483 1.417.925.442.442.72.837.925 1.417.206.585.393 1.32.446 2.49.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.24 1.905-.446 2.49a3.532 3.532 0 01-.925 1.417c-.442.442-.837.72-1.417.925-.585.206-1.32.393-2.49.446-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.905-.24-2.49-.446a3.532 3.532 0 01-1.417-.925c-.442-.442-.72-.837-.925-1.417-.206-.585-.393 1.32-.446-2.49-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.17.24-1.905.446-2.49.205-.58.483-.975.925-1.417.442-.442.837-.72 1.417.925.585-.206 1.32-.393 2.49-.446C8.416 2.175 8.796 2.163 12 2.163m0-2C8.74 0 8.333.01 7.053.062c-1.218.052-2.26.248-3.164.586C2.88 1.003 1.997 1.547.96 2.583.003 3.62.453 4.935.062 6.053c-.052 1.28-.062 1.687-.062 4.947s.01 3.667.062 4.947c.052 1.218.248 2.26.586 3.164.398.907.942 1.79 1.978 2.827.978.978 1.92 1.522 2.827 1.978 1.02.338 1.946.534 3.164.586 1.28.052 1.687.062 4.947.062s3.667-.01 4.947-.062c1.218-.052 2.26-.248 3.164-.586.907-.398 1.79-.942 2.827-1.978.978-.978 1.522-1.92 1.978-2.827.338-1.02.534-1.946.586-3.164.052-1.28.062-1.687.062-4.947s-.01-3.667-.062-4.947c-.052-1.218-.248-2.26-.586-3.164C21.997 1.547 21.003.453 19.947.062 18.947.01 17.253 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Twitter TrashGu" class="text-gray-500 hover:text-green-600 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                        </a>
+                        <a href="#" aria-label="YouTube TrashGu" class="text-gray-500 hover:text-green-600 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-10 pt-8 border-t border-slate-300 text-center text-sm text-gray-500">
+            <p>&copy; 2025 TrashGu. All rights reserved. Dibuat dengan ❤️ untuk lingkungan.</p>
+        </div>
+      </div>
+    </footer>
+
+    <button
+      id="scrollToTopBtn"
+      title="Kembali ke atas"
+      class="hidden fixed bottom-8 right-8 p-3 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 opacity-0 visibility-hidden"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+    </button>
+
+    <script type="module" src="/src/index.js"></script>
+    <script>
+        // Script sederhana untuk toggle menu mobile
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Script untuk tombol Scroll ke Atas
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+        if (scrollToTopBtn) {
+            // Tampilkan tombol ketika scroll lebih dari 300px
+            window.onscroll = function() {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollToTopBtn.classList.remove('hidden', 'opacity-0', 'visibility-hidden');
+                    scrollToTopBtn.classList.add('opacity-100', 'visibility-visible');
+                } else {
+                    scrollToTopBtn.classList.remove('opacity-100', 'visibility-visible');
+                    scrollToTopBtn.classList.add('hidden', 'opacity-0', 'visibility-hidden');
+                }
+            };
+
+            // Scroll ke atas ketika tombol diklik
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+        }
+    </script>
+  </body>
+</html>
