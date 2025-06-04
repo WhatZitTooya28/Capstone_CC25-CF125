@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrashGu - Masuk</title>
+    <style>
+      .input-icon-container {
+        position: relative;
+      }
+      .input-icon-container .toggle-password {
+        position: absolute;
+        top: 50%;
+        right: 0.75rem; /* 12px */
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #9ca3af; /* gray-400 */
+      }
+      .input-icon-container .toggle-password:hover {
+        color: #6b7280; /* gray-500 */
+      }
+    </style>
+  </head>
+  <body class="font-sans bg-slate-100">
+    <div
+      class="min-h-screen flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8 login-background"
+    >
+      <div class="relative bg-white p-8 sm:p-10 md:p-12 rounded-xl shadow-2xl w-full max-w-md z-10">
+        <div class="text-center mb-8">
+          <a href="./index.html">
+            <img src="./assets/images/logo.png" alt="TrashGu Logo" class="h-12 sm:h-14 mx-auto mb-4" />
+          </a>
+          <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Masuk ke Akun Anda</h1>
+          <p class="text-sm text-gray-600 mt-1">Selamat datang kembali!</p>
+        </div>
+
+        <form id="loginForm" class="space-y-6">
+          <div>
+            <label for="login-identifier" class="block text-sm font-medium text-gray-700 mb-1">Nama Pengguna atau Email</label>
+            <div class="relative mt-1">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <input
+                id="login-identifier"
+                name="identifier"
+                type="text"
+                autocomplete="username"
+                required
+                class="appearance-none block w-full px-3 py-2.5 pl-10 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#3F7D58] focus:border-[#3F7D58] sm:text-sm"
+                placeholder="Masukkan nama pengguna atau email"
+              />
+            </div>
+            <p id="identifier-error" class="mt-1 text-xs text-red-500 hidden"></p>
+          </div>
+
+          <div>
+            <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi</label>
+            <div class="relative mt-1 input-icon-container">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" />
+                      </svg>
+                </div>
+              <input
+                id="login-password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                class="appearance-none block w-full px-3 py-2.5 pl-10 pr-10 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#3F7D58] focus:border-[#3F7D58] sm:text-sm"
+                placeholder="Masukkan kata sandi Anda"
+              />
+              <span class="toggle-password" id="toggle-password-login">
+                <svg class="h-5 w-5" id="eye-icon-login-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                  <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                </svg>
+                <svg class="h-5 w-5 hidden" id="eye-icon-login-closed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd" />
+                  <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.742L2.293 6.546A10.005 10.005 0 01.458 10c1.274 4.057 5.064 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
+                </svg>
+              </span>
+            </div>
+            <p id="password-login-error" class="mt-1 text-xs text-red-500 hidden"></p>
+          </div>
+
+          <div class="flex items-center justify-end mb-6">
+            <div class="text-xs">
+              <a href="#" class="font-medium text-[#3F7D58] hover:text-[#326748]"> Lupa kata sandi? </a>
+            </div>
+          </div>
+
+          <div>
+            <button
+              id="loginSubmitButton"
+              type="submit"
+              class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#3F7D58] hover:bg-[#326748] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-75"
+            >
+              <span id="loginButtonText">Masuk</span>
+              <svg id="loginSpinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div id="login-message" class="mt-4 text-sm text-center"></div>
+        <p class="mt-8 text-center text-xs text-gray-500">
+          Belum punya akun?
+          <a href="./registrasi.html" class="font-medium text-[#3F7D58] hover:text-[#326748]"> Buat Akun </a>
+        </p>
+      </div>
+    </div>
+    <script>
+      const loginForm = document.getElementById('loginForm');
+      const loginMessage = document.getElementById('login-message');
+      const identifierInput = document.getElementById('login-identifier');
+      const passwordInputLogin = document.getElementById('login-password');
+      const identifierError = document.getElementById('identifier-error');
+      const passwordLoginError = document.getElementById('password-login-error');
+
+      const loginSubmitButton = document.getElementById('loginSubmitButton');
+      const loginButtonText = document.getElementById('loginButtonText');
+      const loginSpinner = document.getElementById('loginSpinner');
+      
+      let passwordLoginToggleTimeout;
+
+      function togglePasswordVisibilityLogin(inputId, openIconId, closedIconId, timeoutDuration = 2000) {
+        const input = document.getElementById(inputId);
+        const openIcon = document.getElementById(openIconId);
+        const closedIcon = document.getElementById(closedIconId);
+        clearTimeout(passwordLoginToggleTimeout);
+        if (input.type === "password") {
+          input.type = "text";
+          openIcon.classList.add('hidden');
+          closedIcon.classList.remove('hidden');
+          passwordLoginToggleTimeout = setTimeout(() => {
+            input.type = "password";
+            openIcon.classList.remove('hidden');
+            closedIcon.classList.add('hidden');
+          }, timeoutDuration);
+        } else {
+          input.type = "password";
+          openIcon.classList.remove('hidden');
+          closedIcon.classList.add('hidden');
+        }
+      }
+
+      document.getElementById('toggle-password-login').addEventListener('click', () => {
+        togglePasswordVisibilityLogin('login-password', 'eye-icon-login-open', 'eye-icon-login-closed');
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        if(identifierInput) identifierInput.focus();
+      });
+
+      loginForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        loginMessage.textContent = '';
+        loginMessage.className = 'mt-4 text-sm text-center';
+        identifierError.textContent = ''; identifierError.classList.add('hidden');
+        passwordLoginError.textContent = ''; passwordLoginError.classList.add('hidden');
+
+        const identifier = identifierInput.value;
+        const password = passwordInputLogin.value;
+        let isValid = true;
+
+        if (!identifier.trim()) {
+            identifierError.textContent = 'Nama pengguna atau email tidak boleh kosong.';
+            identifierError.classList.remove('hidden');
+            isValid = false;
+        }
+        if (!password.trim()) {
+            passwordLoginError.textContent = 'Kata sandi tidak boleh kosong.';
+            passwordLoginError.classList.remove('hidden');
+            isValid = false;
+        }
+        
+        if (!isValid) {
+          return;
+        }
+
+        loginSubmitButton.disabled = true;
+        loginButtonText.textContent = 'Masuk...';
+        loginSpinner.classList.remove('hidden');
+
+        try {
+          const response = await fetch('http://localhost:5000/api/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              identifier: identifier,
+              password: password,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            loginMessage.textContent = result.message || 'Login berhasil! Mengarahkan ke dashboard...';
+            loginMessage.classList.add('text-green-600');
+            
+            // Simpan token dan data pengguna ke localStorage
+            localStorage.setItem('authToken', result.token);
+            localStorage.setItem('currentUser', JSON.stringify(result.user)); // Simpan info pengguna
+            
+            loginForm.reset();
+            setTimeout(() => {
+              window.location.href = './dashboard.html'; // Arahkan ke dashboard (buat file ini nanti)
+            }, 1500);
+          } else {
+            loginMessage.textContent = result.error || 'Login gagal. Periksa kembali kredensial Anda.';
+            loginMessage.classList.add('text-red-500');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          loginMessage.textContent = 'Terjadi kesalahan koneksi. Silakan coba lagi nanti.';
+          loginMessage.classList.add('text-red-500');
+        } finally {
+            loginSubmitButton.disabled = false;
+            loginButtonText.textContent = 'Masuk';
+            loginSpinner.classList.add('hidden');
+        }
+      });
+    </script>
+  </body>
+</html>

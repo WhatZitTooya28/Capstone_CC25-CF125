@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrashGu - Hasil Klasifikasi</title>
+    <style>
+      #scrollToTopBtnHasil { /* ID unik untuk tombol scroll di halaman ini */
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+      }
+    </style>
+  </head>
+  <body class="font-sans text-gray-700 bg-[#F5F7FA]">
+    <header class="bg-[#EFEFEF] shadow-md sticky top-0 z-40"> <!-- z-index navbar lebih rendah dari dropdown -->
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-2">
+          <a href="./index.html">
+            <img src="./assets/images/logo.png" alt="TrashGu Logo" class="h-9" />
+          </a>
+        </div>
+        <nav
+          class="hidden md:flex gap-5 lg:gap-7 text-sm font-medium justify-center flex-1"
+        >
+          <a href="./index.html" id="nav-beranda" class="text-gray-600 hover:text-[#3F7D58]">Beranda</a>
+          <a href="./index.html#tentang" class="text-gray-600 hover:text-[#3F7D58]">Tentang</a>
+          <a href="./index.html#fitur" class="text-gray-600 hover:text-[#3F7D58]">Fitur</a>
+          <a href="./klasifikasi.html" id="nav-klasifikasi" class="text-gray-600 hover:text-[#3F7D58]">Klasifikasi</a>
+          <a href="./index.html#artikel" class="text-gray-600 hover:text-[#3F7D58]">Artikel</a>
+          <a href="./tim-teknologi.html" id="nav-tim-teknologi" class="text-gray-600 hover:text-[#3F7D58]">Tim & Teknologi</a>
+        </nav>
+        
+        <!-- Area Autentikasi -->
+        <div class="flex items-center">
+            <!-- Tombol untuk Pengguna Tamu (Belum Login) -->
+            <div id="nav-auth-guest" class="flex items-center gap-3 text-sm">
+              <a href="./registrasi.html" id="nav-daftar-button" class="text-gray-600 hover:text-[#3F7D58] font-medium text-xs sm:text-sm">Daftar</a>
+              <a href="./login.html" id="nav-masuk-button" class="bg-[#3F7D58] text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-md font-medium hover:bg-[#326748] transition-colors text-xs sm:text-sm">Masuk</a>
+            </div>
+
+            <!-- Dropdown Profil untuk Pengguna yang Sudah Login (Awalnya Hidden) -->
+            <div id="nav-auth-user" class="hidden relative">
+                <button id="user-profile-button" type="button" class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-[#3F7D58]">
+                    <span class="sr-only">Buka menu pengguna</span>
+                    <img class="h-8 w-8 rounded-full object-cover" src="https://placehold.co/40x40/A0AEC0/FFFFFF?text=U" alt="User Avatar" id="navbar-user-avatar">
+                    <span id="navbar-user-name-short" class="hidden sm:inline-block ml-2 text-gray-700 font-medium">User</span>
+                    <svg class="hidden sm:inline-block ml-1 h-4 w-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <!-- Menu Dropdown -->
+                <div id="user-profile-dropdown" class="profile-dropdown hidden origin-top-right w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none py-1">
+                    <div class="px-4 py-3">
+                        <p class="text-sm text-gray-700">Masuk sebagai</p>
+                        <p class="text-sm font-medium text-gray-900 truncate" id="dropdown-user-name-full">Nama Pengguna</p>
+                    </div>
+                    <a href="./dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 hover:text-[#3F7D58]">Dashboard</a>
+                    <a href="#" id="nav-profile-link" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 hover:text-[#3F7D58]">Profil Akun</a>
+                    <button id="navbar-logout-button" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700">Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:hidden ml-3"> <!-- ml-3 ditambahkan untuk jarak dari user/auth buttons -->
+          <button
+            id="mobile-menu-button"
+            class="text-gray-600 hover:text-[#3F7D58] focus:outline-none"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <!-- Menu Mobile (strukturnya tetap sama, JavaScript akan menangani visibilitas tombol auth) -->
+      <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg">
+        <a href="./index.html" class="block px-4 py-2 text-sm text-gray-600 hover:text-[#3F7D58] hover:bg-gray-50 mobile-nav-beranda">Beranda</a>
+        <a href="./index.html#tentang" class="block px-4 py-2 text-sm text-gray-600 hover:text-[#3F7D58] hover:bg-gray-50">Tentang</a>
+        <a href="./index.html#fitur" class="block px-4 py-2 text-sm text-gray-600 hover:text-[#3F7D58] hover:bg-gray-50">Fitur</a>
+        <a href="./klasifikasi.html" class="block px-4 py-2 text-sm text-gray-600 hover:text-[#3F7D58] hover:bg-gray-50 mobile-nav-klasifikasi">Klasifikasi</a>
+        <a href="./index.html#artikel" class="block px-4 py-2 text-sm text-gray-600 hover:text-[#3F7D58] hover:bg-gray-50">Artikel</a>
+        <a href="./tim-teknologi.html" class="block px-4 py-2 text-sm text-gray-600 hover:text-[#3F7D58] hover:bg-gray-50 mobile-nav-tim-teknologi">Tim & Teknologi</a>
+        <div id="mobile-nav-auth-guest" class="px-2 pt-2 pb-3 space-y-1">
+            <a href="./registrasi.html" class="block text-center w-full bg-slate-100 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-slate-200">Daftar</a>
+            <a href="./login.html" class="block text-center w-full bg-[#3F7D58] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#326748]">Masuk</a>
+        </div>
+        <div id="mobile-nav-auth-user" class="hidden px-2 pt-2 pb-3 space-y-1">
+            <span class="block px-2 py-2 text-sm text-gray-700">Hello, <strong id="mobile-navbar-user-name">User</strong>!</span>
+            <a href="./dashboard.html" class="block text-center w-full bg-slate-100 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-slate-200">Dashboard</a>
+            <a href="#" id="mobile-nav-profile-link" class="block text-center w-full bg-slate-100 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-slate-200">Profil Akun</a>
+            <button id="mobile-navbar-logout-button" class="block text-center w-full bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="py-12 sm:py-16">
+      <section id="hasil-klasifikasi-sampah" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8 sm:mb-10">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800">Hasil Klasifikasi Sampah</h1>
+        </div>
+
+        <div class="bg-[#3F7D58] p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl">
+          <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+            <div class="w-full md:w-2/5">
+              <h2 class="text-lg font-semibold text-white mb-3">Gambar Sampah</h2>
+              <div class="bg-slate-700 bg-opacity-50 rounded-lg overflow-hidden aspect-w-1 aspect-h-1 flex items-center justify-center min-h-[250px] sm:min-h-[300px]">
+                <img id="classified-image" src="https://placehold.co/400x400/718096/E2E8F0?text=Memuat+Gambar..." alt="Gambar Sampah yang Diklasifikasi" class="w-full h-full object-cover">
+              </div>
+            </div>
+
+            <div class="w-full md:w-3/5 text-white">
+              <h2 class="text-3xl sm:text-4xl font-bold mb-5" id="waste-name-placeholder">Memuat...</h2>
+              
+              <div class="mb-5">
+                <label for="waste-category-placeholder" class="block text-sm font-medium text-slate-200 mb-1">Kategori</label>
+                <div id="waste-category-placeholder" class="w-full bg-white bg-opacity-25 border border-slate-400 text-white text-sm rounded-lg p-2.5 min-h-[42px] flex items-center">Memuat...</div>
+              </div>
+
+              <div class="mb-5">
+                <label for="accuracy-level-placeholder" class="block text-sm font-medium text-slate-200 mb-1">Tingkat Akurasi</label>
+                <div id="accuracy-level-placeholder" class="w-full bg-white bg-opacity-25 border border-slate-400 text-white text-sm rounded-lg p-2.5 min-h-[42px] flex items-center">Memuat...</div>
+              </div>
+              
+              <div class="mt-6">
+                <h3 class="text-md font-semibold text-slate-100 mb-2">Saran Penanganan:</h3>
+                <ul id="handling-suggestions-placeholder" class="list-disc list-inside text-sm text-slate-200 space-y-1 min-h-[60px]">
+                  <li>Memuat saran...</li>
+                </ul>
+              </div>
+
+              <div class="mt-8 text-center md:text-left">
+                <a href="./klasifikasi.html" class="inline-block bg-white text-[#3F7D58] px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-100 transition-colors shadow-md">
+                  Klasifikasi Lagi
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-[#EFEFEF] text-gray-600 py-6 text-center mt-16 sm:mt-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-xs sm:text-sm">&copy; 2025 TrashGu | CC25-CF125. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <button
+      id="scrollToTopBtnHasil"
+      title="Kembali ke atas"
+      class="hidden fixed bottom-6 right-6 sm:bottom-8 sm:right-8 p-3 bg-[#3F7D58] text-white rounded-full shadow-lg hover:bg-[#326748] focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 opacity-0 visibility-hidden"
+    >
+      <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+    </button>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('Halaman hasil dimuat. Mencoba mengambil data...');
+        const urlParams = new URLSearchParams(window.location.search);
+        const wasteTypeParam = urlParams.get('type');
+        const confidenceParam = urlParams.get('confidence');
+        const imageNameParam = urlParams.get('imageName');
+        
+        console.log('Parameter URL:', { wasteTypeParam, confidenceParam, imageNameParam });
+
+        const imageUrlFromStorage = localStorage.getItem('classifiedImageUrl');
+        console.log('URL Gambar dari localStorage:', imageUrlFromStorage ? imageUrlFromStorage.substring(0,100) + "..." : null); // Log sebagian atau null
+
+
+        const classifiedImageEl = document.getElementById('classified-image');
+        const wasteNameEl = document.getElementById('waste-name-placeholder');
+        const wasteCategoryEl = document.getElementById('waste-category-placeholder');
+        const accuracyLevelEl = document.getElementById('accuracy-level-placeholder');
+        const handlingSuggestionsEl = document.getElementById('handling-suggestions-placeholder');
+
+        if (imageUrlFromStorage && classifiedImageEl) {
+            console.log('Menampilkan gambar dari localStorage');
+            classifiedImageEl.src = imageUrlFromStorage;
+            classifiedImageEl.alt = decodeURIComponent(imageNameParam || "Gambar yang diklasifikasi");
+        } else {
+            console.error("URL gambar tidak ditemukan di localStorage atau elemen gambar tidak ada.");
+            if(classifiedImageEl) {
+                classifiedImageEl.alt = "Gambar tidak tersedia";
+                classifiedImageEl.src = "https://placehold.co/400x400/FF0000/FFFFFF?text=Gambar+Tidak+Ditemukan"; 
+            }
+        }
+
+        if (wasteTypeParam && confidenceParam) {
+            let displayWasteName = decodeURIComponent(imageNameParam || "Hasil Analisis").replace(/\.[^/.]+$/, "");
+            let displayCategory = "Tidak Diketahui";
+            let suggestions = ["Informasi penanganan tidak tersedia."];
+
+            if (wasteTypeParam === "ORGANIK") {
+                displayCategory = "Organik";
+                if (!imageNameParam || imageNameParam.toLowerCase() === "camera-capture.png") displayWasteName = "Sampah Organik";
+                suggestions = [
+                    "Jadikan kompos untuk pupuk tanaman.",
+                    "Bisa diberikan sebagai pakan ternak (jika sesuai).",
+                    "Buang ke tempat sampah khusus organik."
+                ];
+            } else if (wasteTypeParam === "ANORGANIK") {
+                displayCategory = "Anorganik";
+                 if (!imageNameParam || imageNameParam.toLowerCase() === "camera-capture.png") displayWasteName = "Sampah Anorganik";
+                suggestions = [
+                    "Pisahkan berdasarkan jenis material (plastik, kertas, logam, kaca).",
+                    "Bersihkan dari sisa kotoran atau cairan.",
+                    "Serahkan ke bank sampah atau fasilitas daur ulang terdekat."
+                ];
+            }
+            
+            if (wasteNameEl) wasteNameEl.textContent = displayWasteName;
+            if (wasteCategoryEl) wasteCategoryEl.textContent = displayCategory;
+            if (accuracyLevelEl) accuracyLevelEl.textContent = `${parseFloat(confidenceParam).toFixed(0)} %`;
+
+            if(handlingSuggestionsEl){
+                handlingSuggestionsEl.innerHTML = ''; 
+                suggestions.forEach(suggestion => {
+                    const li = document.createElement('li');
+                    li.textContent = suggestion;
+                    handlingSuggestionsEl.appendChild(li);
+                });
+            }
+        } else { 
+             console.warn('Parameter type atau confidence tidak ditemukan di URL.');
+             if (wasteNameEl) wasteNameEl.textContent = "Data Tidak Lengkap";
+             if (wasteCategoryEl) wasteCategoryEl.textContent = "-";
+             if (accuracyLevelEl) accuracyLevelEl.textContent = "-";
+             if (handlingSuggestionsEl) handlingSuggestionsEl.innerHTML = '<li>Tidak ada data hasil klasifikasi yang lengkap.</li>';
+        }
+        
+        // Mengomentari baris ini untuk mencegah penghapusan prematur,
+        // terutama jika pengguna me-refresh halaman hasil.
+        // localStorage.removeItem('classifiedImageUrl'); 
+      });
+
+      // Script untuk menu mobile dan scroll-to-top (diasumsikan ada di index.js atau file terpisah)
+      const mobileMenuButtonHasil = document.getElementById('mobile-menu-button-hasil');
+      const mobileMenuHasil = document.getElementById('mobile-menu-hasil');
+
+      if (mobileMenuButtonHasil && mobileMenuHasil) {
+        mobileMenuButtonHasil.addEventListener('click', () => {
+          mobileMenuHasil.classList.toggle('hidden');
+        });
+      }
+
+      const scrollToTopBtnHasil = document.getElementById('scrollToTopBtnHasil');
+      if (scrollToTopBtnHasil) {
+        const handleScrollHasil = () => {
+          if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            scrollToTopBtnHasil.classList.remove('hidden', 'opacity-0', 'visibility-hidden');
+            scrollToTopBtnHasil.classList.add('opacity-100', 'visibility-visible');
+          } else {
+            scrollToTopBtnHasil.classList.remove('opacity-100', 'visibility-visible');
+            scrollToTopBtnHasil.classList.add('hidden', 'opacity-0', 'visibility-hidden');
+          }
+        };
+        window.addEventListener('scroll', handleScrollHasil);
+        
+        scrollToTopBtnHasil.addEventListener('click', () => {
+          window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+      }
+    </script>
+  </body>
+</html>

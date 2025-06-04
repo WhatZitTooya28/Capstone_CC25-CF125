@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Anda bisa menambahkan custom CSS lain di sini jika diperlukan */
+body {
+  /* Contoh custom font jika diperlukan, pastikan font sudah diimpor atau tersedia */
+  /* font-family: 'NamaFontAnda', sans-serif; */
+}
+/* Tambahkan ini di frontend/src/styles/styles.css */
+.login-background {
+  background-image: url('../assets/images/background-login.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: crisp-edges; /* Untuk beberapa browser */
+  image-rendering: -webkit-optimize-contrast; /* Khusus Chrome/WebKit */
+}
