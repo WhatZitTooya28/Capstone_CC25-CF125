@@ -1,10 +1,24 @@
 # TrashGu: Teknologi Cerdas untuk Identifikasi dan Klasifikasi Sampah Melalui Citra Digital
 
-# Deskripsi
-TrashGu merupakan sebuah platform digital yang menyediakan solusi berbasis kecerdasan buatan untuk mendukung proses pemilahan sampah organik, anorganik, dan residu.
+# ♻️ Deskripsi TrashGu
+TrashGu adalah aplikasi berbasis machine learning yang dapat mengklasifikasikan gambar sampah ke dalam beberapa kategori seperti organik, anorganik, dan residu berdasarkan 10 jenis sampah. Proyek ini bertujuan untuk membantu pengelolaan sampah dengan meningkatkan kesadaran masyarakat akan pentingnya memilah sampah. Selain itu, proyek ini juga menyediakan edukasi mengenai cara pengelolaan sampah yang baik dan benar.
 
 
-Dengan mengimplementasikan teknologi Convolutional Neural Network (CNN), TrashGu mampu melakukan klasifikasi jenis sampah secara efisien dan akurat, sehingga dapat meningkatkan efektivitas pengelolaan limbah dan mendorong penerapan praktik daur ulang yang berkelanjutan. Platform ini tidak hanya berfungsi sebagai alat bantu teknis, tetapi juga memiliki peran edukatif dalam menumbuhkan kesadaran serta membentuk perilaku masyarakat yang lebih peduli terhadap pentingnya pemilahan sampah sejak dari sumber. Berbasis pada kajian terhadap beberapa sistem pengelolaan sampah pintar seperti CleanRobotics, Bin-e, dan Evreka, TrashGu dikembangkan sebagai Minimum Viable Product (MVP) yang memiliki potensi untuk terus disempurnakan dalam rangka mendukung upaya pelestarian lingkungan secara digital dan sistematis.
+# 🚀 Fitur Utama
+
+1. Mengklasifikasikan sampah hanya dari gambar.
+2. Model machine learning yang dilatih dengan dataset seimbang.
+3. Antarmuka user friendly berbasis web.
+
+
+# 🛠️ Teknologi yang Digunakan
+
+- Front-End: HTML5, CSS3, Tailwind CSS, Webpack, dan JavaScript.
+- Back-End: Flask, SQLite, dan Postman.
+- Machine Learning: Python, Keras, Pandas, Numpy, Scikit-Learn, Matplotlib, dan Tensorflow.
+- Tools: Visual Studio Code (IDE) dan Google Colab (training model).
+- Version Control: GitHub.
+
 
 # Dataset
 
