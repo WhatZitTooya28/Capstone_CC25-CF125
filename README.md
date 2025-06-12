@@ -8,16 +8,16 @@ TrashGu adalah aplikasi berbasis machine learning yang dapat mengklasifikasikan 
 
 1. Mengklasifikasikan sampah hanya dari gambar.
 2. Model machine learning yang dilatih dengan dataset seimbang.
-3. Antarmuka user friendly berbasis web.
+3. Antarmuka *user friendly* berbasis web.
 
 
 # 🛠️ Teknologi yang Digunakan
 
-- Front-End: HTML5, CSS3, Tailwind CSS, Webpack, dan JavaScript.
-- Back-End: Flask, SQLite, dan Postman.
-- Machine Learning: Python, Keras, Pandas, Numpy, Scikit-Learn, Matplotlib, dan Tensorflow.
-- Tools: Visual Studio Code (IDE) dan Google Colab (training model).
-- Version Control: GitHub.
+- **Front-End**: HTML5, CSS3, Tailwind CSS, Webpack, dan JavaScript.
+- **Back-End**: Flask, SQLite, dan Postman.
+- **Machine Learning**: Python, Keras, Pandas, Numpy, Scikit-Learn, Matplotlib, dan Tensorflow.
+- **Tools**: Visual Studio Code (IDE) dan Google Colab (training model).
+- **Version Control**: GitHub.
 
 
 # Dataset
