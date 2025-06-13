@@ -413,7 +413,7 @@ main {
                 const headers = localStorage.getItem('authToken') ? { 'Authorization': `Bearer ${localStorage.getItem('authToken')}` } : {};
 
                 try {
-                    const response = await fetch(`http://localhost:5000${apiEndpoint}`, { method: 'POST', headers, body: formData });
+                    const response = await fetch(`https://pebria.pythonanywhere.com${apiEndpoint}`, { method: 'POST', headers, body: formData });
                     const result = await response.json();
                     if (!response.ok) throw new Error(result.error || 'Terjadi kesalahan server.');
                     
