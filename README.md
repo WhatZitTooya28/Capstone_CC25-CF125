@@ -38,6 +38,6 @@ Coding Camp 2025 Team CC25-CF125
 1. [Agistia Ronna Aniqa](https://www.linkedin.com/in/agistiaronna/) - MC299D5X1601 - Machine Learning
 2. [Evi Afiyatus Solihah](https://www.linkedin.com/in/eviafiyatussolihah/) - MC299D5X1752 - Machine Learning
 3. [Rahmah Fauziah](https://www.linkedin.com/in/rahmahf/) - MC299D5X1751 - Machine Learning
-4. [Fajar Anugrah]() - FC265D5Y1786 - Front-End & Back-End
+4. [Fajar Anugrah](https://www.linkedin.com/in/fajaranugrah29/) - FC265D5Y1786 - Front-End & Back-End
 5. [M.Reza Pahlevi](http://www.linkedin.com/in/m-reza-pahlevi-26a21b255) - FC265D5Y1103 - Front-End & Back-End
 6. [Pebri Andika](https://www.linkedin.com/in/pebri-andika-40386a356) - FC265D5Y1796 - Front-End & Back-End
