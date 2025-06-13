@@ -1,4 +1,4 @@
-# File: backend/app.py
+# File: backend/app.py (Ini adalah file yang akan diunggah ke PythonAnywhere)
 
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
@@ -10,20 +10,20 @@ import datetime
 import jwt
 from functools import wraps
 import logging
-import requests  # Menggunakan requests untuk memanggil API
-from PIL import Image
-import io
+import random
 from collections import Counter
+# import requests  # Hapus atau komentari ini
+# import numpy as np # Pertahankan ini untuk random choice
 
 app = Flask(__name__)
 CORS(app)
 
 # --- Konfigurasi Aplikasi ---
-app.config['SECRET_KEY'] = 'ganti-dengan-kunci-rahasia-super-aman-anda-56789'
+app.config['SECRET_KEY'] = 'ganti-dengan-kunci-rahasia-super-aman-anda-56789'  # Ganti ini dengan kunci rahasia yang kuat!
 app.config['JWT_ALGORITHM'] = 'HS256'
-app.config['JWT_EXP_DELTA_SECONDS'] = 3600 * 24 
+app.config['JWT_EXP_DELTA_SECONDS'] = 3600 * 24  # Token berlaku 24 jam
 
-# --- Konfigurasi Database dan Folder Unggah ---
+# --- Konfigurasi Database dan Folder Upload ---
 instance_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'instance')
 if not os.path.exists(instance_path):
     os.makedirs(instance_path)
@@ -35,33 +35,35 @@ UPLOAD_FOLDER = os.path.join(instance_path, 'uploads')
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Batas ukuran file 16MB
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# --- Konfigurasi Model (Sekarang menggunakan data statis) ---
+# --- Konfigurasi Label dan Saran Penanganan Sampah ---
+CLASS_LABELS = ['battery', 'biological', 'cardboard', 'clothes', 'glass', 'metal', 'paper', 'plastic', 'shoes', 'trash']
 REMAP_DICT = {
     'battery': 'RESIDU', 'biological': 'ORGANIK', 'cardboard': 'ANORGANIK',
     'clothes': 'RESIDU', 'glass': 'ANORGANIK', 'metal': 'ANORGANIK',
     'paper': 'ANORGANIK', 'plastic': 'ANORGANIK', 'shoes': 'RESIDU', 'trash': 'RESIDU'
 }
 HANDLING_SUGGESTIONS = {
-    'battery': 'Baterai bekas mengandung bahan logam berat. Harap kumpulkan dan bawa ke dropbox limbah B3 atau e-waste center agar tidak mencemari lingkungan.',
-    'biological': 'Sisa makanan dan bahan organik dapat dikomposkan untuk menjadi pupuk alami yang bermanfaat untuk tanaman.',
-    'cardboard': 'Kardus dapat dilipat dan dijual ke pengepul atau diserahkan ke tempat daur ulang. Pastikan kardus kering dan bersih.',
-    'clothes': 'Pakaian layak pakai dapat disumbangkan. Jika rusak, buang ke tempat sampah residu.',
-    'glass': 'Pisahkan botol dan kaca dengan hati-hati. Serahkan pada tempat daur ulang kaca untuk diproses kembali.',
-    'metal': 'Kaleng dan jenis logam lainnya dapat dibersihkan dan dijual ke pengepul logam untuk mengurangi limbah.',
-    'paper': 'Kertas bersih dapat dikumpulkan dan dijual ke bank sampah atau tempat daur ulang.',
-    'plastic': 'Bersihkan plastik sebelum didaur ulang. Pisahkan dari sampah residu agar proses daur ulang optimal.',
-    'shoes': 'Sepatu lama yang masih layak dapat disumbangkan. Jika rusak, buang ke tempat sampah residu.',
-    'trash': 'Jenis sampah ini umumnya tidak dapat didaur ulang. Buang sesuai prosedur kebersihan.',
-    'TIDAK DIKETAHUI': "Jenis sampah tidak dapat dikenali. Coba ambil gambar dengan lebih jelas."
+    'battery': 'Baterai bekas mengandung bahan logam berat seperti merkuri, timbal, kadmium, dan litium. Harap kumpulkan, pisahkan, dan bawa ke dropbox limbah B3 atau e-waste center agar tidak mencemari lingkungan.',
+    'biological': 'Sisa makanan dan bahan organik dapat dikomposkan untuk menjadi pupuk alami. Ini membantu dalam mengurangi intensitas sampah serta menghasilkan pupuk alami yang bermanfaat untuk tanaman.',
+    'cardboard': 'Kardus yang sudah tidak digunakan dapat dilipat dan dijual ke pengepul atau diserahkan ke tempat daur ulang. Pastikan kardus kering dan bersih.',
+    'clothes': 'Pakaian lama yang masih layak digunakan dapat disumbangkan atau digunakan kembali. Apabila sudah rusak, sebaiknya dibuang ke dalam tempat sampah jenis residu.',
+    'glass': 'Harap pisahkan dan kumpulkan botol dan kaca dengan hati-hati. Pastikan tidak pecah dan serahkan pada tempat daur ulang kaca supaya dapat diproses kembali.',
+    'metal': 'Kaleng dan jenis logam lainnya dapat dibersihkan dan dijual ke pengepul logam. Ini dapat membantu mengurangi limbah.',
+    'paper': 'Kertas bersih dapat dikumpulkan dan dijual ke bank sampah atau tempat daur ulang. Pastikan kertas tidak tercampur dengan jenis sampah lain.',
+    'plastic': 'Plastik harus dibersihkan dulu sebelum didaur ulang. Pisahkan plastik dengan jenis sampah residu supaya proses daur ulang dapat berjalan dengan baik.',
+    'shoes': 'Sepatu lama yang masih layak dapat disumbangkan, sedangkan jika sudah rusak buang pada tempat sampah residu.',
+    'trash': 'Jenis sampah ini umumnya tidak dapat didaur ulang. Buang sesuai dengan prosedur kebersihan dan jangan campur dengan sampah yang bisa didaur ulang.',
+    'TIDAK DIKETAHUI': "Jenis sampah tidak dapat dikenali. Coba ambil gambar dengan lebih jelas atau dari sudut yang berbeda."
 }
 
-# --- Model Database ---
+# --- Database Models ---
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -69,25 +71,28 @@ class User(db.Model):
     password_hash = db.Column(db.String(200), nullable=False)
     avatar_url = db.Column(db.String(255), nullable=True)
 
-    def set_password(self, password): self.password_hash = generate_password_hash(password)
-    def check_password(self, password): return check_password_hash(self.password_hash, password)
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 class ClassificationHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     filename = db.Column(db.String(200), nullable=True)
     image_url = db.Column(db.String(255), nullable=True)
-    classification_result = db.Column(db.String(50), nullable=False)
+    classification_result = db.Column(db.String(50), nullable=False) # Kategori utama: ORGANIK/ANORGANIK/RESIDU
     accuracy = db.Column(db.Float, nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     user = db.relationship('User', backref=db.backref('histories', lazy=True, cascade="all, delete-orphan"))
-    specific_name = db.Column(db.String(100), nullable=True)
+    specific_name = db.Column(db.String(100), nullable=True) # Nama spesifik: battery/plastic/paper dll.
     suggestion = db.Column(db.Text, nullable=True)
 
 with app.app_context():
     db.create_all()
 
-# --- Dekorator Autentikasi ---
+# --- Authentication Decorator ---
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -96,109 +101,166 @@ def token_required(f):
             auth_header = request.headers['Authorization']
             if auth_header.startswith('Bearer '):
                 token = auth_header.split(" ")[1]
-        if not token: return jsonify({'message': 'Token tidak ditemukan!', 'error_code': 'TOKEN_MISSING'}), 401
+
+        if not token:
+            return jsonify({'message': 'Token tidak ditemukan!', 'error_code': 'TOKEN_MISSING'}), 401
+
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=[app.config['JWT_ALGORITHM']])
             current_user = User.query.filter_by(username=data['sub']).first()
-            if not current_user: return jsonify({'message': 'Pengguna dengan token ini tidak ditemukan.', 'error_code': 'USER_NOT_FOUND'}), 401
-        except Exception: return jsonify({'message': 'Token tidak valid!', 'error_code': 'TOKEN_INVALID'}), 401
+            if not current_user:
+                return jsonify({'message': 'Pengguna dengan token ini tidak ditemukan.', 'error_code': 'USER_NOT_FOUND'}), 401
+
+        except jwt.ExpiredSignatureError:
+            return jsonify({'message': 'Token sudah kedaluwarsa!', 'error_code': 'TOKEN_EXPIRED'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'message': 'Token tidak valid!', 'error_code': 'TOKEN_INVALID'}), 401
+        except Exception as e:
+            app.logger.error(f"Error decoding token: {e}")
+            return jsonify({'message': 'Masalah saat validasi token.', 'error_code': 'TOKEN_VALIDATION_ERROR'}), 401
+
         return f(current_user, *args, **kwargs)
     return decorated
 
-# --- Fungsi Bantuan Prediksi ML (Menggunakan Hugging Face API) ---
-def predict_image_from_api(image_bytes):
-    # Ganti dengan URL API Inference dan Token dari akun Hugging Face Anda
+# --- Fungsi Prediksi ML (Sekarang Dummy Classifier) ---
+# HUGGING_FACE_API_URL = "https://api-inference.huggingface.co/models/PebriA/trashgu-classification-model" # Hapus/komentari
+# HUGGING_FACE_API_KEY = "hf_YOUR_API_TOKEN_HERE" # Hapus/komentari
 
-    # GANTI DENGAN TOKEN ANDA
+def predict_image(image_path):
+    # Tidak perlu membaca gambar atau memanggil API eksternal lagi
+    # Langsung kembalikan hasil dummy
     
-    headers = {"Authorization": f"Bearer {HF_TOKEN}"}
-    try:
-        response = requests.post(API_URL, headers=headers, data=image_bytes, timeout=25)
-        response.raise_for_status()
-        result = response.json()
-        
-        if not result or not isinstance(result, list):
-            return None, None, 0.0, None, "Respons API tidak valid."
-            
-        best_prediction = max(result, key=lambda x: x['score'])
-        predicted_label_specific = best_prediction['label']
-        accuracy = float(best_prediction['score'])
-        main_category = REMAP_DICT.get(predicted_label_specific, 'RESIDU')
-        suggestions = [HANDLING_SUGGESTIONS.get(predicted_label_specific, HANDLING_SUGGESTIONS['TIDAK DIKETAHUI'])]
-        
-        return main_category, predicted_label_specific, accuracy, suggestions, None
-        
-    except requests.exceptions.RequestException as e:
-        app.logger.error(f"Error memanggil Hugging Face API: {e}")
-        return None, None, 0.0, None, f"Gagal terhubung ke server model. Model mungkin sedang dimuat, coba beberapa saat lagi."
-    except Exception as e:
-        app.logger.error(f"Error memproses respons API: {e}")
-        return None, None, 0.0, None, f"Gagal memproses hasil prediksi: {e}"
-
+    # Pilih label spesifik secara acak dari CLASS_LABELS
+    predicted_label_specific = random.choice(CLASS_LABELS) 
+    
+    # Tentukan confidence acak
+    raw_confidence = random.uniform(0.50, 0.98) 
+    
+    is_anomaly = False # Selalu False untuk dummy
+    
+    # Remap ke kategori utama (ORGANIK, ANORGANIK, RESIDU)
+    main_category = REMAP_DICT.get(predicted_label_specific, 'RESIDU')
+    
+    # Gunakan simulasi akurasi Anda
+    simulated_accuracy = 0.50 + (raw_confidence * (0.98 - 0.50))
+    
+    suggestions = [HANDLING_SUGGESTIONS.get(predicted_label_specific, HANDLING_SUGGESTIONS['TIDAK DIKETAHUI'])]
+    
+    app.logger.info(f"DEBUG: Returning dummy prediction: {predicted_label_specific} (Category: {main_category})")
+    
+    return main_category, predicted_label_specific, simulated_accuracy, suggestions, None # Tidak ada error_msg
 
 # --- API Endpoints ---
 @app.route('/api/register', methods=['POST'])
 def register_user():
     data = request.get_json()
-    if not data: return jsonify({"error": "Request body tidak valid (bukan JSON)"}), 400
-    nama_pengguna = data.get('namaPengguna'); email = data.get('email'); password = data.get('password')
-    if not all([nama_pengguna, email, password]): return jsonify({"error": "Data tidak lengkap"}), 400
-    if User.query.filter_by(username=nama_pengguna).first(): return jsonify({"error": "Nama pengguna sudah terdaftar"}), 409
-    if User.query.filter_by(email=email).first(): return jsonify({"error": "Email sudah terdaftar"}), 409
-    new_user = User(username=nama_pengguna, email=email); new_user.set_password(password)
+    if not data:
+        return jsonify({"error": "Request body tidak valid (bukan JSON)"}), 400
+
+    nama_pengguna = data.get('namaPengguna')
+    email = data.get('email')
+    password = data.get('password')
+
+    if not all([nama_pengguna, email, password]):
+        return jsonify({"error": "Data tidak lengkap"}), 400
+
+    if User.query.filter_by(username=nama_pengguna).first():
+        return jsonify({"error": "Nama pengguna sudah terdaftar"}), 409
+
+    if User.query.filter_by(email=email).first():
+        return jsonify({"error": "Email sudah terdaftar"}), 409
+
+    new_user = User(username=nama_pengguna, email=email)
+    new_user.set_password(password)
+
     try:
-        db.session.add(new_user); db.session.commit()
+        db.session.add(new_user)
+        db.session.commit()
         app.logger.info(f"Pengguna terdaftar: {nama_pengguna}")
         return jsonify({"message": f"Pengguna {nama_pengguna} berhasil terdaftar!"}), 201
     except Exception as e:
-        db.session.rollback(); app.logger.error(f"Error registrasi: {e}")
+        db.session.rollback()
+        app.logger.error(f"Error registrasi: {e}")
         return jsonify({"error": "Gagal mendaftarkan pengguna, coba lagi."}), 500
 
 @app.route('/api/login', methods=['POST'])
 def login_user():
     data = request.get_json()
-    if not data: return jsonify({"error": "Request body tidak valid (bukan JSON)"}), 400
-    identifier = data.get('identifier'); password = data.get('password')
-    if not all([identifier, password]): return jsonify({"error": "Data tidak lengkap"}), 400
+    if not data:
+        return jsonify({"error": "Request body tidak valid (bukan JSON)"}), 400
+
+    identifier = data.get('identifier')
+    password = data.get('password')
+
+    if not all([identifier, password]):
+        return jsonify({"error": "Data tidak lengkap"}), 400
+
     user_candidate = User.query.filter_by(username=identifier).first()
-    if not user_candidate: user_candidate = User.query.filter_by(email=identifier).first()
+    if not user_candidate:
+        user_candidate = User.query.filter_by(email=identifier).first()
+
     if user_candidate and user_candidate.check_password(password):
-        payload = {'sub': user_candidate.username, 'email': user_candidate.email, 'user_id': user_candidate.id, 'iat': datetime.datetime.utcnow(), 'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=app.config['JWT_EXP_DELTA_SECONDS'])}
+        payload = {
+            'sub': user_candidate.username,
+            'email': user_candidate.email,
+            'user_id': user_candidate.id,
+            'iat': datetime.datetime.utcnow(),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=app.config['JWT_EXP_DELTA_SECONDS'])
+        }
         try:
             token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm=app.config['JWT_ALGORITHM'])
             app.logger.info(f"Pengguna berhasil login: {user_candidate.username}")
             return jsonify({"message": "Login berhasil!", "token": token, "user": {"namaPengguna": user_candidate.username, "email": user_candidate.email, "id": user_candidate.id, "avatarUrl": user_candidate.avatar_url}}), 200
         except Exception as e:
-            app.logger.error(f"Error saat generate token: {e}"); return jsonify({"error": "Gagal membuat token autentikasi"}), 500
+            app.logger.error(f"Error saat generate token:{e}")
+            return jsonify({"error": "Gagal membuat token autentikasi"}), 500
     else:
-        app.logger.warning(f"Gagal login untuk identifier: {identifier}"); return jsonify({"error": "Nama pengguna/email atau kata sandi salah"}), 401
+        app.logger.warning(f"Gagal login untuk identifier: {identifier}")
+        return jsonify({"error": "Nama pengguna/email atau kata sandi salah"}), 401
 
 @app.route('/api/klasifikasi', methods=['POST'])
 @token_required
 def klasifikasi_sampah_authenticated(current_user):
-    if 'image' not in request.files: return jsonify({"error": "Tidak ada file gambar"}), 400
-    file = request.files['image']
-    if file.filename == '' or not allowed_file(file.filename): return jsonify({"error": "File tidak valid"}), 400
-    
-    image_bytes = file.read()
-    original_filename = secure_filename(file.filename)
-    
-    main_category, specific_category, accuracy, suggestions, error_msg = predict_image_from_api(image_bytes)
-    if error_msg:
-        return jsonify({"error": error_msg}), 500
+    if 'image' not in request.files:
+        return jsonify({"error": "Tidak ada file gambar yang dikirim"}), 400
 
+    file = request.files['image']
+    if file.filename == '' or not allowed_file(file.filename):
+        return jsonify({"error": "File tidak valid atau tidak diizinkan"}), 400
+    
+    # Simpan file secara sementara untuk dikirim ke dummy classifier
+    original_filename = secure_filename(file.filename)
+    timestamp_str = datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")
+    unique_filename = f"{timestamp_str}_{original_filename}"
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+    
     try:
-        timestamp_str = datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")
-        unique_filename = f"{timestamp_str}_{original_filename}"
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-        with open(file_path, 'wb') as f:
-            f.write(image_bytes)
+        file.save(file_path)
         image_access_url = f"/uploads/{unique_filename}"
-        
+    except Exception as e:
+        app.logger.error(f"Failed to save file: {e}")
+        return jsonify({"error": "Gagal menyimpan file gambar"}), 500
+
+    # Panggil fungsi prediksi yang sekarang mengembalikan hasil dummy
+    main_category, specific_category, accuracy, suggestions, error_msg = predict_image(file_path)
+    
+    # Hapus file sementara setelah prediksi (untuk menjaga kuota disk)
+    if os.path.exists(file_path):
+        try:
+            os.remove(file_path)
+            app.logger.info(f"Temporary file {file_path} removed after classification.")
+        except Exception as e_remove:
+            app.logger.error(f"Failed to remove temp file {file_path}: {e_remove}")
+
+    if error_msg:
+        return jsonify({"error": error_msg, "error_code": "PREDICTION_FAILED"}), 500
+    
+    # Simpan riwayat ke database (hanya untuk authenticated users)
+    try:
         new_history = ClassificationHistory(
             user_id=current_user.id,
             filename=original_filename,
-            image_url=image_access_url,
+            image_url=image_access_url, # URL ini akan merujuk ke file yang diupload (sudah dihapus), jadi ini mungkin perlu disesuaikan jika gambar tidak disimpan permanen
             classification_result=main_category,
             accuracy=accuracy,
             specific_name=specific_category.capitalize(),
@@ -208,26 +270,65 @@ def klasifikasi_sampah_authenticated(current_user):
         db.session.commit()
     except Exception as e:
         db.session.rollback()
-        app.logger.error(f"Gagal menyimpan riwayat: {e}")
+        app.logger.error(f"Failed to save history: {e}")
         return jsonify({"error": "Gagal menyimpan riwayat ke database."}), 500
 
-    response_data = { "kategori": main_category, "kategori_spesifik": specific_category, "akurasi": accuracy, "saran_penanganan": suggestions }
+    response_data = {
+        "kategori": main_category,
+        "kategori_spesifik": specific_category,
+        "akurasi": accuracy,
+        "saran_penanganan": suggestions,
+        "timestamp": datetime.datetime.utcnow().isoformat(),
+        "nama_file_asli": original_filename,
+        "image_url_preview": image_access_url, # Ini akan bekerja jika Anda memiliki mekanisme untuk menyimpan gambar riwayat secara permanen di cloud storage
+    }
     return jsonify(response_data), 200
 
+# Endpoint baru untuk pengguna tamu
 @app.route('/api/klasifikasi-guest', methods=['POST'])
 def klasifikasi_sampah_guest():
-    if 'image' not in request.files: return jsonify({"error": "Tidak ada file gambar"}), 400
+    if 'image' not in request.files:
+        return jsonify({"error": "Tidak ada file gambar yang dikirim"}), 400
+
     file = request.files['image']
-    if file.filename == '' or not allowed_file(file.filename): return jsonify({"error": "File tidak valid"}), 400
+    if file.filename == '' or not allowed_file(file.filename):
+        return jsonify({"error": "File tidak valid atau tidak diizinkan"}), 400
     
-    image_bytes = file.read()
-    main_category, specific_category, accuracy, suggestions, error_msg = predict_image_from_api(image_bytes)
-    if error_msg:
-        return jsonify({"error": error_msg}), 500
+    # Membuat nama file sementara untuk tamu
+    original_filename = secure_filename(file.filename)
+    temp_filename = f"guest_{datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')}_{original_filename}"
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], temp_filename)
     
-    response_data = { "kategori": main_category, "kategori_spesifik": specific_category, "akurasi": accuracy, "saran_penanganan": suggestions }
-    return jsonify(response_data), 200
-    
+    try:
+        file.save(file_path)
+        # Prediksi gambar (dummy)
+        main_category, specific_category, accuracy, suggestions, error_msg = predict_image(file_path)
+        
+        if error_msg:
+            return jsonify({"error": error_msg, "error_code": "PREDICTION_FAILED"}), 500
+        
+        # Mengembalikan hasil tanpa menyimpan ke database
+        response_data = {
+            "kategori": main_category,
+            "kategori_spesifik": specific_category,
+            "akurasi": accuracy,
+            "saran_penanganan": suggestions,
+            "timestamp": datetime.datetime.utcnow().isoformat(),
+            "nama_file_asli": original_filename
+        }
+        return jsonify(response_data), 200
+    except Exception as e:
+        app.logger.error(f"Error during guest classification: {e}")
+        return jsonify({"error": "Terjadi kesalahan saat memproses gambar."}), 500
+    finally:
+        # Menghapus file sementara setelah prediksi selesai (PENTING untuk menjaga kuota disk)
+        if os.path.exists(file_path):
+            try:
+                os.remove(file_path)
+                app.logger.info(f"Temporary guest file {file_path} removed.")
+            except Exception as e_remove:
+                app.logger.error(f"Failed to remove temp guest file {file_path}: {e_remove}")
+
 @app.route('/api/history', methods=['GET'])
 @token_required
 def get_history(current_user):
@@ -257,9 +358,11 @@ def get_statistics(current_user):
         user_histories = ClassificationHistory.query.filter_by(user_id=current_user.id).all()
         if not user_histories:
             return jsonify({"total_classifications": 0, "category_counts": {"ORGANIK": 0, "ANORGANIK": 0, "RESIDU": 0}}), 200
+        
         total_classifications = len(user_histories)
         category_list = [h.classification_result for h in user_histories]
         category_counts = Counter(category_list)
+        
         final_counts = {
             "ORGANIK": category_counts.get("ORGANIK", 0),
             "ANORGANIK": category_counts.get("ANORGANIK", 0),
@@ -275,16 +378,26 @@ def get_statistics(current_user):
 def delete_history_item(current_user, history_id):
     try:
         history_item = ClassificationHistory.query.filter_by(id=history_id, user_id=current_user.id).first()
-        if not history_item: return jsonify({"error": "Item riwayat tidak ditemukan atau Anda tidak berhak menghapusnya."}), 404
-        if history_item.image_url:
+        if not history_item:
+            return jsonify({"error": "Item riwayat tidak ditemukan atau Anda tidak berhak menghapusnya."}), 404
+
+        # Perhatian: Karena gambar sekarang hanya disimpan sementara,
+        # 'image_url' di DB mungkin tidak lagi merujuk ke file fisik yang ada.
+        # Jika Anda ingin gambar riwayat tetap bisa diakses, Anda perlu mengunggahnya
+        # ke layanan cloud storage (misalnya Firebase Storage, AWS S3) secara permanen
+        # dan menyimpan URL cloud-nya di DB, bukan path lokal.
+        if history_item.image_url and history_item.image_url.startswith('/uploads/'):
             try:
                 filename_only = history_item.image_url.split('/')[-1]
                 file_to_delete_path = os.path.join(app.config['UPLOAD_FOLDER'], filename_only)
                 if os.path.exists(file_to_delete_path):
                     os.remove(file_to_delete_path)
                     app.logger.info(f"File gambar {file_to_delete_path} berhasil dihapus.")
+                else:
+                    app.logger.warning(f"File {file_to_delete_path} not found for deletion.")
             except Exception as e_file_delete:
-                app.logger.error(f"Failed to delete image file: {e_file_delete}")
+                app.logger.error(f"Failed to delete image file (might already be gone): {e_file_delete}")
+
         db.session.delete(history_item)
         db.session.commit()
         app.logger.info(f"History item ID: {history_id} deleted by user {current_user.username}")
@@ -327,12 +440,15 @@ def upload_avatar(current_user):
         return jsonify({"error": "File tidak valid atau tidak diizinkan."}), 400
         
     try:
+        # Menggunakan Pillow (tetap di sini karena hanya untuk resize avatar, bukan inferensi ML)
+        from PIL import Image
+        
         _, file_extension = os.path.splitext(file.filename)
         avatar_filename = f"avatar_{current_user.id}{file_extension}"
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], avatar_filename)
         
         img = Image.open(file)
-        img.thumbnail((300, 300))
+        img.thumbnail((300, 300))  # Ubah ukuran avatar
         img.save(file_path)
 
         avatar_access_url = f"/uploads/{avatar_filename}"
@@ -349,10 +465,12 @@ def upload_avatar(current_user):
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    """Serves uploaded files."""
+    """Melayani file yang diunggah."""
     safe_path = os.path.abspath(app.config['UPLOAD_FOLDER'])
     requested_path = os.path.abspath(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    if not requested_path.startswith(safe_path): return jsonify({"error": "File tidak ditemukan"}), 404
+    # Memastikan path yang diminta tidak keluar dari UPLOAD_FOLDER
+    if not requested_path.startswith(safe_path):
+        return jsonify({"error": "File tidak ditemukan"}), 404
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
