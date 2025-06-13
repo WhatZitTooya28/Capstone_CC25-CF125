@@ -6,7 +6,7 @@
     <title>TrashGu - Dashboard</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Google Fonts: Poppins -->
+     <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -31,13 +31,11 @@
         ::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
 </head>
-
 <body class="bg-gray-50 text-gray-800">
     <div class="relative min-h-screen md:flex">
-        <!-- Overlay untuk mobile -->
+         <!-- Overlay untuk mobile -->
         <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden"></div>
-
-        <!-- Sidebar Navigation -->
+         <!-- Sidebar Navigation -->
         <aside id="dashboard-sidebar" class="bg-white w-72 text-gray-800 flex flex-col fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 z-30 shadow-lg">
             <div class="p-6 flex items-center gap-4 border-b border-gray-100">
                 <img src="./assets/images/logo.png" alt="TrashGu Logo" class="h-10" />
@@ -66,7 +64,7 @@
             </div>
         </aside>
         
-        <!-- Main Content Wrapper -->
+         <!-- Main Content Wrapper -->
         <div class="flex-1 flex flex-col max-h-screen overflow-hidden">
              <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-10 p-4 flex items-center justify-between border-b">
                 <button id="sidebar-toggle-button" class="md:hidden text-gray-600 focus:outline-none"><i class="fas fa-bars fa-lg"></i></button>
@@ -83,7 +81,7 @@
             </header>
             
             <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
-                <!-- Halaman Dashboard -->
+                 <!-- Halaman Dashboard -->
                 <div id="page-dashboard" class="page-content">
                      <h1 class="text-3xl font-bold text-gray-800 mb-2" id="dashboard-greeting">Halo, User!</h1>
                     <p class="text-gray-500 mb-8">Ringkasan Statistik Anda</p>
@@ -135,8 +133,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Halaman Riwayat -->
+                 <!-- Halaman Riwayat -->
                 <div id="page-riwayat" class="page-content hidden">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Semua Riwayat Klasifikasi</h2>
                     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -144,8 +141,7 @@
                         <div id="all-history-items-container" class="divide-y divide-gray-100"></div>
                     </div>
                 </div>
-
-                <!-- Halaman Statistik -->
+                 <!-- Halaman Statistik -->
                 <div id="page-statistik" class="page-content hidden">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Statistik Klasifikasi</h2>
                     <h3 class="text-xl font-semibold text-gray-700 mb-4">Ringkasan Total</h3>
@@ -155,8 +151,7 @@
                         <div class="h-96 w-full"><canvas id="pie-chart-statistik"></canvas></div>
                     </div>
                 </div>
-
-                <!-- Halaman Pengaturan -->
+                 <!-- Halaman Pengaturan -->
                 <div id="page-pengaturan" class="page-content hidden">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Pengaturan Akun</h2>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -186,7 +181,7 @@
                         <div class="lg:col-span-2">
                             <div class="bg-white p-6 rounded-xl shadow-sm border">
                                 <h3 class="text-lg font-semibold border-b pb-3 mb-4">Ubah Kata Sandi</h3>
-                                <!-- PERBAIKAN FORM KATA SANDI -->
+                                 <!-- PERBAIKAN FORM KATA SANDI -->
                                 <form id="changePasswordForm" class="space-y-4">
                                     <div>
                                         <label for="old-password" class="block text-sm font-medium text-gray-700">Kata Sandi Lama</label>
@@ -213,7 +208,7 @@
         </div>
     </div>
     
-    <!-- Modal Konfirmasi Hapus -->
+     <!-- Modal Konfirmasi Hapus -->
     <div id="delete-confirmation-modal" class="modal-overlay fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-50 opacity-0">
         <div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md transform scale-95 text-center">
             <h3 class="text-lg font-bold text-gray-900">Hapus Riwayat?</h3>
@@ -224,17 +219,15 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal Lihat Detail -->
+     <!-- Modal Lihat Detail -->
     <div id="view-detail-modal" class="modal-overlay fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-50 opacity-0">
         <div id="detail-content-wrapper" class="modal-content bg-green-700 text-white rounded-lg shadow-xl w-full max-w-2xl transform scale-95 flex flex-col md:flex-row overflow-hidden">
-            <!-- Konten detail dimuat oleh JS -->
+             <!-- Konten detail dimuat oleh JS -->
         </div>
     </div>
-
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const API_BASE_URL = 'https://pebria.pythonanywhere.com/api';
+        const API_BASE_URL = 'https://pebria.pythonanywhere.com'; // Ubah ini agar tidak ada /api di akhir, karena akan ditambahkan di setiap fetch
         const sidebar = document.getElementById('dashboard-sidebar');
         const sidebarToggle = document.getElementById('sidebar-toggle-button');
         const sidebarOverlay = document.getElementById('sidebar-overlay');
@@ -244,31 +237,30 @@
         const userMenuDropdown = document.getElementById('user-menu-dropdown');
         window.charts = {};
         let allHistories = [];
-
-        // --- (Blok Navigasi & UI tidak berubah) ---
-        function switchPage(pageId) {
-            contentPages.forEach(page => page.classList.add('hidden'));
-            document.getElementById(pageId)?.classList.remove('hidden');
-            navLinks.forEach(link => {
-                link.classList.toggle('active', link.dataset.page === pageId);
+         // --- Navigasi & UI ---
+        function switchPage( pageId ) {
+            contentPages.forEach( page  =>  page .classList.add('hidden'));
+            document.getElementById( pageId )?.classList.remove('hidden');
+            navLinks.forEach( link  => {
+                 link .classList.toggle('active',  link .dataset.page ===  pageId );
             });
             if (window.innerWidth < 768) {
                 sidebar.classList.add('-translate-x-full');
                 sidebarOverlay.classList.add('hidden');
             }
         }
-        navLinks.forEach(link => {
-            if (link.dataset.page) {
-                link.addEventListener('click', (e) => { 
-                    e.preventDefault(); 
-                    switchPage(link.dataset.page); 
+        navLinks.forEach( link  => {
+            if ( link .dataset.page) {
+                 link .addEventListener('click', ( e ) => { 
+                     e .preventDefault(); 
+                     switchPage( link .dataset.page); 
                 });
             }
         });
         const viewAllActivitiesBtn = document.getElementById('view-all-activities');
         if(viewAllActivitiesBtn) {
-            viewAllActivitiesBtn.addEventListener('click', (e) => {
-                e.preventDefault();
+            viewAllActivitiesBtn.addEventListener('click', ( e ) => {
+                 e .preventDefault();
                 switchPage('page-riwayat');
             });
         }
@@ -280,26 +272,25 @@
         sidebarOverlay.addEventListener('click', toggleSidebar);
         if (userMenuButton) {
             userMenuButton.addEventListener('click', () => userMenuDropdown.classList.toggle('hidden'));
-            document.addEventListener('click', (e) => {
-                if (!userMenuButton.contains(e.target) && !userMenuDropdown.contains(e.target)) {
+            document.addEventListener('click', ( e ) => {
+                if (!userMenuButton.contains( e .target) && !userMenuDropdown.contains( e .target)) {
                     userMenuDropdown.classList.add('hidden');
                 }
             });
-            userMenuDropdown.querySelector('a[data-page]')?.addEventListener('click', (e) => {
-                e.preventDefault();
+            userMenuDropdown.querySelector('a[data-page]')?.addEventListener('click', ( e ) => {
+                 e .preventDefault();
                 userMenuDropdown.classList.add('hidden');
-                switchPage(e.target.dataset.page);
+                switchPage( e .target.dataset.page);
             });
         }
-        function handleLogout(e) { 
-            e.preventDefault(); 
+        function handleLogout( e ) { 
+             e .preventDefault(); 
             localStorage.clear(); 
             window.location.href = './login.html';
         }
         document.getElementById('logout-button').addEventListener('click', handleLogout);
         document.getElementById('logout-button-dropdown').addEventListener('click', handleLogout);
-
-        // --- (Blok Fetch Data tidak berubah) ---
+         // --- Fetch Data ---
         async function fetchData() {
             const authToken = localStorage.getItem('authToken');
             if (!authToken) { handleLogout(new Event('click')); return; }
@@ -319,18 +310,16 @@
                 console.error("Error fetching data:", error);
             }
         }
-
-        // --- (Blok Update UI tidak berubah) ---
-        function updateUI(statsData, histories) {
+         // --- Update UI ---
+        function updateUI( statsData ,  histories ) {
             updateUserUI();
-            updateStatsUI(statsData);
-            updateRecentHistoryUI(histories);
-            updateAllHistoryUI(histories);
-            renderPieChart('pie-chart-dashboard', statsData.category_counts);
-            renderPieChart('pie-chart-statistik', statsData.category_counts);
+            updateStatsUI( statsData );
+            updateRecentHistoryUI( histories );
+            updateAllHistoryUI( histories );
+            renderPieChart('pie-chart-dashboard',  statsData .category_counts);
+            renderPieChart('pie-chart-statistik',  statsData .category_counts);
         }
-
-        // --- (Blok Update User UI tidak berubah) ---
+         // --- Update User UI ---
         function updateUserUI() {
             try {
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -341,52 +330,51 @@
                 document.getElementById('profile-username').textContent = displayName;
                 document.getElementById('profile-email').textContent = currentUser.email || '-';
                 const savedAvatar = localStorage.getItem('userAvatar');
-                const avatarSrc = savedAvatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=16A34A&color=fff&bold=true`;
+                // Menggunakan API_BASE_URL untuk gambar avatar jika URL-nya relatif
+                const avatarSrc = savedAvatar && savedAvatar.startsWith('https://') ? savedAvatar : API_BASE_URL + savedAvatar; // Perbaikan: Cek jika sudah absolute URL
                 document.getElementById('navbar-user-avatar').src = avatarSrc; 
                 document.getElementById('profile-avatar').src = avatarSrc;
             } catch(e) { console.error("Could not parse user data from localStorage", e); }
         }
-
-        // --- (Blok Update Stats UI tidak berubah) ---
-        function updateStatsUI(data) {
-             if (data && data.total_classifications > 0) {
-                document.getElementById('stats-total').textContent = data.total_classifications;
-                document.getElementById('stats-organik').textContent = data.category_counts.ORGANIK || 0;
-                document.getElementById('stats-anorganik').textContent = data.category_counts.ANORGANIK || 0;
-                document.getElementById('stats-residu').textContent = data.category_counts.RESIDU || 0;
+         // --- Update Stats UI ---
+        function updateStatsUI( data ) {
+             if ( data  &&  data .total_classifications > 0) {
+                document.getElementById('stats-total').textContent =  data .total_classifications;
+                document.getElementById('stats-organik').textContent =  data .category_counts.ORGANIK || 0;
+                document.getElementById('stats-anorganik').textContent =  data .category_counts.ANORGANIK || 0;
+                document.getElementById('stats-residu').textContent =  data .category_counts.RESIDU || 0;
                 const statsCloneContainer = document.getElementById('statistics-summary-clone');
                 const originalCards = document.querySelectorAll('#page-dashboard .grid.grid-cols-1.sm\\:grid-cols-2 > div');
                 if (statsCloneContainer) {
                     statsCloneContainer.innerHTML = '';
-                    originalCards.forEach(card => {
-                        statsCloneContainer.appendChild(card.cloneNode(true));
+                    originalCards.forEach( card  => {
+                        statsCloneContainer.appendChild( card .cloneNode(true));
                     });
                 }
              }
         }
         
-        // --- (Blok Update Recent History UI tidak berubah) ---
-        function updateRecentHistoryUI(histories) {
+         // --- Update Recent History UI ---
+        function updateRecentHistoryUI( histories ) {
              const container = document.getElementById('recent-activity-list');
             if (!container) return;
             container.innerHTML = '';
-            if (!histories || histories.length === 0) {
+            if (! histories  ||  histories .length === 0) {
                 container.innerHTML = '<p class="text-gray-500 p-4 text-center">Belum ada aktivitas.</p>';
                 return;
             }
-            histories.slice(0, 3).forEach(item => {
-                const accuracy = (item.accuracy * 100).toFixed(0);
-                const categoryColor = item.classification_result === 'ORGANIK' ? 'text-orange-600' : 'text-gray-600';
+             histories .slice(0, 3).forEach( item  => {
+                const accuracy = ( item .accuracy * 100).toFixed(0);
+                const categoryColor =  item .classification_result === 'ORGANIK' ? 'text-orange-600' : 'text-gray-600';
                 const accuracyColor = accuracy > 85 ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700';
-
                 const itemEl = document.createElement('div');
                 itemEl.className = 'flex items-start gap-4 py-3 border-b last:border-b-0'; 
                 itemEl.innerHTML = `
                     <div class="flex-1 min-w-0">
-                        <p class="font-semibold text-gray-800" title="${item.filename || 'Gambar'}">
-                           ${item.filename || 'Gambar'} - <span class="font-bold ${categoryColor}">${item.classification_result}</span>
+                        <p class="font-semibold text-gray-800" title="${ item .filename || 'Gambar'}">
+                           ${ item .filename || 'Gambar'} - <span class="font-bold ${categoryColor}">${ item .classification_result}</span>
                         </p>
-                        <p class="text-sm text-gray-500 mt-1">${new Date(item.timestamp).toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour:'2-digit', minute: '2-digit'})}</p>
+                        <p class="text-sm text-gray-500 mt-1">${new Date( item .timestamp).toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour:'2-digit', minute: '2-digit'})}</p>
                     </div>
                     <div class="ml-auto flex-shrink-0">
                         <span class="font-bold text-xs py-1 px-2 rounded-full ${accuracyColor}">${accuracy}%</span>
@@ -396,62 +384,59 @@
             });
         }
         
-        // --- PERBAIKAN Tampilan Semua Riwayat (Responsif) ---
-        function updateAllHistoryUI(histories) {
+         // --- Update All History UI (Responsif) ---
+        function updateAllHistoryUI( histories ) {
             const container = document.getElementById('all-history-items-container');
             const loader = document.getElementById('loading-all-history');
             if(!container || !loader) return;
             container.innerHTML = '';
-            if (!histories || histories.length === 0) {
+            if (! histories  ||  histories .length === 0) {
                 container.innerHTML = '<p class="text-gray-500 text-center py-8">Belum ada riwayat klasifikasi.</p>';
                 loader.classList.add('hidden');
                 return;
             }
-            histories.forEach(item => {
-                const accuracy = (item.accuracy * 100).toFixed(0);
+             histories .forEach( item  => {
+                const accuracy = ( item .accuracy * 100).toFixed(0);
                 const badgeColor = accuracy > 85 ? 'bg-green-100 text-green-700' : accuracy > 60 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700';
                 const itemEl = document.createElement('div');
                 itemEl.className = 'p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:bg-gray-50';
                 itemEl.innerHTML = `
                     <div class="flex items-center gap-4 w-full sm:w-auto">
-                        <img src="${item.image_url ? API_BASE_URL + item.image_url : 'https://placehold.co/48x48'}" alt="${item.filename}" class="w-12 h-12 rounded-lg object-cover flex-shrink-0">
+                        <img src="${ item .image_url ? API_BASE_URL +  item .image_url : 'https://placehold.co/48x48'}" alt="${ item .filename}" class="w-12 h-12 rounded-lg object-cover flex-shrink-0">
                         <div class="flex-1 min-w-0">
-                            <p class="font-semibold text-gray-800 truncate" title="${item.filename || 'Gambar'}">${item.filename || 'Gambar'}</p>
-                            <p class="text-xs text-gray-400 mt-1">${new Date(item.timestamp).toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'short' })}</p>
+                            <p class="font-semibold text-gray-800 truncate" title="${ item .filename || 'Gambar'}">${ item .filename || 'Gambar'}</p>
+                            <p class="text-xs text-gray-400 mt-1">${new Date( item .timestamp).toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'short' })}</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-4 w-full sm:w-auto justify-end">
                         <span class="font-bold text-sm py-1 px-3 rounded-full ${badgeColor}">${accuracy}%</span>
-                        <span class="font-semibold text-sm w-24 text-center">${item.classification_result}</span>
-                        <button title="Lihat Detail" class="view-button text-gray-400 hover:text-blue-500" data-history-id="${item.id}"><i class="fas fa-eye fa-lg"></i></button>
-                        <button title="Hapus" class="delete-button text-gray-400 hover:text-red-500" data-history-id="${item.id}"><i class="fas fa-trash-alt fa-lg"></i></button>
+                        <span class="font-semibold text-sm w-24 text-center">${ item .classification_result}</span>
+                        <button title="Lihat Detail" class="view-button text-gray-400 hover:text-blue-500" data-history-id="${ item .id}"><i class="fas fa-eye fa-lg"></i></button>
+                        <button title="Hapus" class="delete-button text-gray-400 hover:text-red-500" data-history-id="${ item .id}"><i class="fas fa-trash-alt fa-lg"></i></button>
                     </div>`;
                 container.appendChild(itemEl);
             });
             loader.classList.add('hidden');
         }
-
-        // --- FUNGSI MODAL DIPERBARUI TOTAL ---
+         // --- FUNGSI MODAL DIPERBARUI TOTAL ---
         const deleteModal = document.getElementById('delete-confirmation-modal');
         const viewModal = document.getElementById('view-detail-modal');
         let historyIdToAction = null;
-
-        function openModal(modal) {
-            modal.classList.remove('hidden');
+        function openModal( modal ) {
+             modal .classList.remove('hidden');
             setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.querySelector('.modal-content').classList.remove('scale-95');
+                 modal .classList.remove('opacity-0');
+                 modal .querySelector('.modal-content').classList.remove('scale-95');
             }, 10);
         }
-
-        function closeModal(modal) {
-            modal.querySelector('.modal-content').classList.add('scale-95');
-            modal.classList.add('opacity-0');
-            setTimeout(() => modal.classList.add('hidden'), 300);
+        function closeModal( modal ) {
+             modal .querySelector('.modal-content').classList.add('scale-95');
+             modal .classList.add('opacity-0');
+            setTimeout(() =>  modal .classList.add('hidden'), 300);
         }
         
-        function openViewModal(historyId) {
-            const item = allHistories.find(h => h.id == historyId);
+        function openViewModal( historyId ) {
+            const item = allHistories.find( h  =>  h .id ==  historyId );
             if (!item) return;
             const accuracy = (item.accuracy * 100);
             const detailWrapper = document.getElementById('detail-content-wrapper');
@@ -480,7 +465,6 @@
             detailWrapper.querySelector('#modal-close-detail').addEventListener('click', () => closeModal(viewModal));
             openModal(viewModal);
         }
-
         document.getElementById('modal-cancel-delete').addEventListener('click', () => closeModal(deleteModal));
         
         async function handleDelete() {
@@ -501,9 +485,9 @@
         
         const historyContainer = document.getElementById('all-history-items-container');
         if (historyContainer) {
-            historyContainer.addEventListener('click', (event) => {
-                const deleteButton = event.target.closest('.delete-button');
-                const viewButton = event.target.closest('.view-button');
+            historyContainer.addEventListener('click', ( event ) => {
+                const deleteButton =  event .target.closest('.delete-button');
+                const viewButton =  event .target.closest('.view-button');
                 if (deleteButton) {
                     historyIdToAction = deleteButton.dataset.historyId;
                     openModal(deleteModal);
@@ -513,21 +497,16 @@
                 }
             });
         }
-
-        // --- PERBAIKAN: LOGIKA UNGGAH FOTO & GANTI PASSWORD ---
+         // --- UNGGAH FOTO & GANTI PASSWORD ---
         const avatarUploadInput = document.getElementById('avatar-upload');
         const avatarUploadMessage = document.getElementById('avatar-upload-message');
-
-        avatarUploadInput.addEventListener('change', async (event) => {
-            const file = event.target.files[0];
+        avatarUploadInput.addEventListener('change', async ( event ) => {
+            const file =  event .target.files[0];
             if (!file) return;
-
             const formData = new FormData();
             formData.append('avatar', file);
-
             avatarUploadMessage.textContent = 'Mengunggah...';
             avatarUploadMessage.className = 'text-xs text-center mb-4 text-gray-500';
-
             try {
                 const response = await fetch(`${API_BASE_URL}/api/user/avatar`, {
                     method: 'POST',
@@ -535,9 +514,7 @@
                     body: formData
                 });
                 const result = await response.json();
-
                 if (!response.ok) throw new Error(result.error || 'Gagal mengunggah foto.');
-
                 const newAvatarUrl = API_BASE_URL + result.avatarUrl;
                 document.getElementById('profile-avatar').src = newAvatarUrl;
                 document.getElementById('navbar-user-avatar').src = newAvatarUrl;
@@ -545,32 +522,26 @@
                 
                 avatarUploadMessage.textContent = 'Foto profil berhasil diperbarui!';
                 avatarUploadMessage.className = 'text-xs text-center mb-4 text-green-600';
-
             } catch (error) {
                 console.error('Upload avatar error:', error);
                 avatarUploadMessage.textContent = error.message;
                 avatarUploadMessage.className = 'text-xs text-center mb-4 text-red-600';
             }
         });
-
         const passwordForm = document.getElementById('changePasswordForm');
         const passwordMessage = document.getElementById('password-change-message');
-
-        passwordForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        passwordForm.addEventListener('submit', async ( e ) => {
+             e .preventDefault();
             const oldPassword = document.getElementById('old-password').value;
             const newPassword = document.getElementById('new-password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
-
             if (newPassword !== confirmPassword) {
                 passwordMessage.textContent = 'Konfirmasi kata sandi baru tidak cocok.';
                 passwordMessage.className = 'text-sm text-red-600';
                 return;
             }
-
             passwordMessage.textContent = 'Menyimpan...';
             passwordMessage.className = 'text-sm text-gray-500';
-
             try {
                 const response = await fetch(`${API_BASE_URL}/api/user/change-password`, {
                     method: 'POST',
@@ -580,37 +551,33 @@
                     },
                     body: JSON.stringify({ old_password: oldPassword, new_password: newPassword })
                 });
-
                 const result = await response.json();
                 if (!response.ok) throw new Error(result.error || 'Gagal mengubah kata sandi.');
-
                 passwordMessage.textContent = 'Kata sandi berhasil diubah!';
                 passwordMessage.className = 'text-sm text-green-600';
                 passwordForm.reset();
-
             } catch (error) {
                 console.error('Password change error:', error);
                 passwordMessage.textContent = error.message;
                 passwordMessage.className = 'text-sm text-red-600';
             }
         });
-
-        // --- (Blok Render Chart tidak berubah) ---
-        function renderPieChart(canvasId, categoryCounts) {
-           const ctx = document.getElementById(canvasId)?.getContext('2d');
+         // --- Render Chart ---
+        function renderPieChart( canvasId ,  categoryCounts ) {
+           const ctx = document.getElementById( canvasId )?.getContext('2d');
             if (!ctx) return;
-            if (window.charts[canvasId]) window.charts[canvasId].destroy();
+            if (window.charts[ canvasId ]) window.charts[ canvasId ].destroy();
             const data = {
                 labels: ['Organik', 'Anorganik', 'Residu'],
                 datasets: [{
-                    data: [categoryCounts.ORGANIK || 0, categoryCounts.ANORGANIK || 0, categoryCounts.RESIDU || 0],
+                    data: [ categoryCounts .ORGANIK || 0,  categoryCounts .ANORGANIK || 0,  categoryCounts .RESIDU || 0],
                     backgroundColor: ['#F97316', '#3B82F6', '#6B7280'],
                     borderColor: '#FFFFFF', 
                     borderWidth: 4,
                     hoverOffset: 8
                 }]
             };
-            window.charts[canvasId] = new Chart(ctx, {
+            window.charts[ canvasId ] = new Chart(ctx, {
                 type: 'doughnut', 
                 data: data, 
                 options: { 
@@ -627,7 +594,7 @@
             });
         }
         
-        // --- (Blok Inisialisasi tidak berubah) ---
+         // --- Inisialisasi ---
         function initializeApp() {
             const authToken = localStorage.getItem('authToken');
             const currentUser = localStorage.getItem('currentUser');
@@ -638,7 +605,6 @@
             switchPage('page-dashboard');
             fetchData();
         }
-
         initializeApp();
     });
     </script>
