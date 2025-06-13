@@ -70,6 +70,21 @@ module.exports = {
       template: './src/dashboard.html', 
       filename: 'dashboard.html',      
       chunks: ['main'] // Asumsi menggunakan bundle JS yang sama
+    }),
+    new HtmlWebpackPlugin({ // Instance baru untuk halaman Dashboard
+      template: './src/riwayat.html', 
+      filename: 'riwayat.html',      
+      chunks: ['main'] // Asumsi menggunakan bundle JS yang sama
+    }),
+    new HtmlWebpackPlugin({ // Instance baru untuk halaman Dashboard
+      template: './src/statistik.html', 
+      filename: 'statistik.html',      
+      chunks: ['main'] // Asumsi menggunakan bundle JS yang sama
+    }),
+    new HtmlWebpackPlugin({ // Instance baru untuk halaman Dashboard
+      template: './src/pengaturan.html', 
+      filename: 'pengaturan.html',      
+      chunks: ['main'] // Asumsi menggunakan bundle JS yang sama
     })
   ],
   mode: 'development',

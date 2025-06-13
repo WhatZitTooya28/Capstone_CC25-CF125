@@ -16,3 +16,7 @@ body {
   image-rendering: crisp-edges; /* Untuk beberapa browser */
   image-rendering: -webkit-optimize-contrast; /* Khusus Chrome/WebKit */
 }
+
+.gradient-card-jelas {
+  background-image: linear-gradient(to bottom, #3F7D58, #2c553c); /* Dari custom-green ke variasi yang sedikit lebih gelap lagi */
+}

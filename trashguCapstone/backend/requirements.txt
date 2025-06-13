@@ -1,5 +1,9 @@
+# File: backend/requirements.txt
 Flask>=2.0
 Flask-CORS>=3.0
 PyJWT>=2.0
 Flask-SQLAlchemy>=2.5
-Werkzeug>=2.0 
+Werkzeug>=2.0
+tensorflow==2.18.0  
+Pillow>=9.0.0       
+numpy>=1.21.0       
