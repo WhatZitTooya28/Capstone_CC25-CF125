@@ -1,5 +1,7 @@
 # TrashGu: Teknologi Cerdas untuk Identifikasi dan Klasifikasi Sampah Melalui Citra Digital
 
+https://github.com/user-attachments/assets/29156258-d873-44fd-8e49-24d00904bf1b
+
 # ♻️ Deskripsi TrashGu
 TrashGu adalah aplikasi berbasis machine learning yang dapat mengklasifikasikan gambar sampah ke dalam beberapa kategori seperti organik, anorganik, dan residu berdasarkan 10 jenis sampah. Proyek ini bertujuan untuk membantu pengelolaan sampah dengan meningkatkan kesadaran masyarakat akan pentingnya memilah sampah. Selain itu, proyek ini juga menyediakan edukasi mengenai cara pengelolaan sampah yang baik dan benar.
 
