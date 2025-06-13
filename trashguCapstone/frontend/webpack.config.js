@@ -1,5 +1,4 @@
 // File: frontend/webpack.config.js
-
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -36,56 +35,43 @@ module.exports = {
     ],
   },
   plugins: [
+    // === PERBAIKAN: Path template diubah, tidak lagi menggunakan './src/' ===
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './index.html', // Path relatif dari root frontend
       filename: 'index.html',
       chunks: ['main'] 
     }),
     new HtmlWebpackPlugin({ 
-      template: './src/tim-teknologi.html', 
-      filename: 'tim-teknologi.html',      
+      template: './tim-teknologi.html', 
+      filename: 'tim-teknologi.html',       
       chunks: ['main'] 
     }),
     new HtmlWebpackPlugin({ 
-      template: './src/klasifikasi.html', 
-      filename: 'klasifikasi.html',      
+      template: './klasifikasi.html', 
+      filename: 'klasifikasi.html',       
       chunks: ['main'] 
     }),
     new HtmlWebpackPlugin({ 
-      template: './src/hasil-klasifikasi.html', 
-      filename: 'hasil-klasifikasi.html',      
+      template: './hasil-klasifikasi.html', 
+      filename: 'hasil-klasifikasi.html',       
       chunks: ['main'] 
     }),
     new HtmlWebpackPlugin({ 
-      template: './src/login.html', 
-      filename: 'login.html',      
+      template: './login.html', 
+      filename: 'login.html',       
       chunks: ['main'] 
     }),
     new HtmlWebpackPlugin({ 
-      template: './src/registrasi.html', 
-      filename: 'registrasi.html',      
+      template: './registrasi.html', 
+      filename: 'registrasi.html',       
       chunks: ['main'] 
     }),
-    new HtmlWebpackPlugin({ // Instance baru untuk halaman Dashboard
-      template: './src/dashboard.html', 
-      filename: 'dashboard.html',      
-      chunks: ['main'] // Asumsi menggunakan bundle JS yang sama
-    }),
-    new HtmlWebpackPlugin({ // Instance baru untuk halaman Dashboard
-      template: './src/riwayat.html', 
-      filename: 'riwayat.html',      
-      chunks: ['main'] // Asumsi menggunakan bundle JS yang sama
-    }),
-    new HtmlWebpackPlugin({ // Instance baru untuk halaman Dashboard
-      template: './src/statistik.html', 
-      filename: 'statistik.html',      
-      chunks: ['main'] // Asumsi menggunakan bundle JS yang sama
-    }),
-    new HtmlWebpackPlugin({ // Instance baru untuk halaman Dashboard
-      template: './src/pengaturan.html', 
-      filename: 'pengaturan.html',      
-      chunks: ['main'] // Asumsi menggunakan bundle JS yang sama
+    new HtmlWebpackPlugin({
+      template: './dashboard.html', 
+      filename: 'dashboard.html',       
+      chunks: ['main']
     })
+    // ======================================================================
   ],
   mode: 'development',
 };
